@@ -1,8 +1,15 @@
 from Carrera import Carrera
 import DAO as dao
 
-def init():
-    results = dao.selectAll()
+mydb = None
+while mydb == None:
+    usuario = input("Pon el nombre de usuario: ")
+    contraseña = input("Pon el nombre de contraseña: ")
+    print("Usuario o contraseña no correcto: \n")
+mydb = dao.myconn(usuario, contraseña)
+
+def init(mydb):
+    results = dao.selectAll(mydb)
     carreras = []
     for x in results:
         carrera = Carrera(x[0], x[1], x[2], x[3], x[4], x[5])
@@ -12,9 +19,9 @@ def init():
 def selectAll(carreras):
     for res in carreras: 
         print(res.__str__())
-def menu():
+def menu(mydb):
     validacio = True
-    carreras = init()
+    carreras = init(mydb)
     while validacio:
         option = int(input("Selecciona una opcion: \n1. Crear Carrera\n2. Mostrar Carrera\n3. Actualizar Carrera\n4. Elminar Carrera\n5. Salir\n    "))
         if option == 1:
@@ -24,7 +31,7 @@ def menu():
             area_conocimiento = input("Indica el area de conocimiento: ")
             modalidad = input("Indica la modalidad: ")
             carrera = Carrera(1,name, duracion, nota_corte, area_conocimiento, modalidad)
-            id =dao.insert(carrera)
+            id =dao.insert(mydb,carrera)
             carrera.setId(id[0])
             carreras.append(carrera)
         elif option == 2:
@@ -35,12 +42,12 @@ def menu():
             selectAll(carreras)
             id= int(input("Indica la id: "))
             newValue = input("Pon el nuevo valor: ")
-            carrera = dao.update(campos[campo-1],newValue, id)
+            carrera = dao.update(mydb,campos[campo-1],newValue, id)
             carreras = selectAll(carreras)
         elif option == 4:
             selectAll(carreras)
             id = int(input("Pon la id del cual quieres eliminar: "))
-            dao.delete(id)
+            dao.delete(mydb,id)
             for x in carreras: 
                 if x.getId() == id:
                     carreras.remove(x)
@@ -50,5 +57,4 @@ def menu():
             validacio = False
         else:
             print("Valor incorrecto")
-
-menu()
+menu(mydb)

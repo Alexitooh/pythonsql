@@ -41,7 +41,6 @@ CREATE TABLE `carrera` (
 
 LOCK TABLES `carrera` WRITE;
 /*!40000 ALTER TABLE `carrera` DISABLE KEYS */;
-INSERT INTO `carrera` VALUES (1,'Matematicas','10','4','10','Online'),(2,'Filosofia','8','4','10','Presencial'),(3,'AlexIa','12','7','Ciencia','Online'),(4,'Marc','12','4','Ciencia','Presencial'),(5,'Pepe','2','3','o','p');
 /*!40000 ALTER TABLE `carrera` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
