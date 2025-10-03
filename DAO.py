@@ -34,7 +34,7 @@ def insert(mydb, carrera:Carrera):
     sql = "INSERT INTO carrera(nombre, nota_corte,duracion, area_conocimiento, modalidad ) VALUES(%s, %s,%s, %s, %s)"
     mycursor.execute(sql, (carrera.getNombre(), carrera.getNotaCorte(), carrera.getDuracion(), carrera.getAreaConocimineto(), carrera.getModalidad()))
     mydb.commit()
-    return wathcOne(carrera.getNombre())
+    return wathcOne(mydb,carrera.getNombre())
 def update(mydb, campo, newValue, id):
     mycursor = mydb.cursor()
     sql = f"UPDATE carrera SET {campo} = %s WHERE id = %s"
