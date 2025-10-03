@@ -5,8 +5,7 @@ mydb = None
 while mydb == None:
     usuario = input("Pon el nombre de usuario: ")
     contraseña = input("Pon el nombre de contraseña: ")
-    print("Usuario o contraseña no correcto: \n")
-mydb = dao.myconn(usuario, contraseña)
+    mydb = dao.myconn(usuario, contraseña)
 
 def init(mydb):
     results = dao.selectAll(mydb)

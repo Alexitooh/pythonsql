@@ -1,4 +1,5 @@
 import mysql.connector
+from mysql.connector import Error
 from Carrera import Carrera
 
 def myconn(usuario, password):
