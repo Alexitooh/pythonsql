@@ -1,25 +1,54 @@
 from Carrera import Carrera
+import DAO as dao
 
+def init():
+    results = dao.selectAll()
+    carreras = []
+    for x in results:
+        carrera = Carrera(x[0], x[1], x[2], x[3], x[4], x[5])
+        carreras.append(carrera)
+    return carreras
+
+def selectAll(carreras):
+    for res in carreras: 
+        print(res.__str__())
 def menu():
-    option = int(input("Selecciona una opcion: \n1. Crear Carrera\n2. Mostrar Carrera\n3. Actualizar Carrera\n4. Elminar Carrera\n5. Salir"))
-    while option != 5:
+    validacio = True
+    carreras = init()
+    while validacio:
+        option = int(input("Selecciona una opcion: \n1. Crear Carrera\n2. Mostrar Carrera\n3. Actualizar Carrera\n4. Elminar Carrera\n5. Salir\n    "))
         if option == 1:
             name = input("Pon el nombre de la Carrera: ")
-            duracion = input("Indica la duracion de la carrera:")
-            nota_corte = input("Indica la de nota corte de la carrera")
-            area_conocimiento = input("Indica el area de conocimiento")
-            modalidad = input("Indica la modalidad")
-            carrera = Carrera(name, duracion, nota_corte, area_conocimiento, modalidad)
+            nota_corte = input("Indica la de nota corte de la carrera: ")
+            duracion = input("Indica la duracion de la carrera: ")
+            area_conocimiento = input("Indica el area de conocimiento: ")
+            modalidad = input("Indica la modalidad: ")
+            carrera = Carrera(1,name, duracion, nota_corte, area_conocimiento, modalidad)
+            id =dao.insert(carrera)
+            carrera.setId(id[0])
+            carreras.append(carrera)
         elif option == 2:
-            delete(input("Ingrese el nombre de la materia a eliminar: "))
+            selectAll(carreras)
         elif option == 3:
-            campo = int(input("Que campo quieres cambiar? \n1. Nombre\n2. Duracion\n3. Nota de corte\n4. Area de conocimiento\n5. Modalidad"))
-                
-
+            campos = ["nombre", "nota_corte","duracion","area_conocimiento","modalidad "]
+            campo = int(input("Que campo quieres cambiar? \n1. Nombre\n2. Duracion\n3. Nota de corte\n4. Area de conocimiento\n5. Modalida\n "))
+            selectAll(carreras)
+            id= int(input("Indica la id: "))
+            newValue = input("Pon el nuevo valor: ")
+            carrera = dao.update(campos[campo-1],newValue, id)
+            carreras = selectAll(carreras)
         elif option == 4:
-            name = input("Ingrese el nombre de la materia a buscar: ")
-            selectOne(name)
+            selectAll(carreras)
+            id = int(input("Pon la id del cual quieres eliminar: "))
+            dao.delete(id)
+            for x in carreras: 
+                if x.getId() == id:
+                    carreras.remove(x)
+
+            
         elif option == 5:
-            name = input("Ingrese el nombre de la materia a actualizar: ")
-            newName = input("Ingrese el nuevo nombre de la materia: ")
-            update(name, newName)
+            validacio = False
+        else:
+            print("Valor incorrecto")
+
+menu()

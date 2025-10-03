@@ -32,3 +32,6 @@ class Carrera:
         self.area_conocimiento = area_conocimiento
     def setModalidad(self, modalidad): 
         self.modalidad = modalidad
+    
+    def __str__(self):
+        return f"[{self.id}] ===> Nombre: {self.nombre} => Duracion: {self.duracion} => Nota de corte: {self.nota_corte} => Area de conocimiento: {self.area_conocimiento} => Modalidad: {self.modalidad}"
